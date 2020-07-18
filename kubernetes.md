@@ -40,6 +40,8 @@ docker swarm, kubernetes, mesos dc/os
 3.  Kubernetes can use ANY container runtime !!
     And, it supports Windows containers as well !!
 
+4.  Kubernetes MASTER is ALWAYS a LINUX machine.
+
 ## Kubernetes Cluster
 
 * One or More MASTER nodes (Production uses 3 masters)
