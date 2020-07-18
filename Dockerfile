@@ -5,7 +5,7 @@ FROM  mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
 
 ## Copy the Binaries
-COPY dist/demo-2.dll /app
+COPY dist/ /app/
 
 ## Inform Docker, how to launch the project
-CMD ["dotnet","/app/demo-2.dll"]
+CMD ["dotnet","demo-2.dll"]
