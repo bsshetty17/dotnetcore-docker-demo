@@ -1,0 +1,68 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Sample Docker build</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.3.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>https://github.com/mahendra-shinde/ci-servlet-demo</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/master</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <com.nirima.jenkins.plugins.docker.builder.DockerBuilderPublisher plugin="docker-plugin@1.2.0">
+      <dockerFileDirectory>.</dockerFileDirectory>
+      <fromRegistry plugin="docker-commons@1.17"/>
+      <tags>
+        <string>mahendrshinde/app101:${BUILD_ID}</string>
+      </tags>
+      <pushOnSuccess>true</pushOnSuccess>
+      <pushCredentialsId>b56d18af-9eb9-4ef1-b636-65a457f6e9e0</pushCredentialsId>
+      <cleanImages>false</cleanImages>
+      <cleanupWithJenkinsJobDelete>false</cleanupWithJenkinsJobDelete>
+      <cloud>docker</cloud>
+      <noCache>false</noCache>
+      <pull>false</pull>
+    </com.nirima.jenkins.plugins.docker.builder.DockerBuilderPublisher>
+  </builders>
+  <publishers>
+    <com.microsoft.jenkins.appservice.WebAppDeploymentRecorder plugin="azure-app-service@1.0.0">
+      <azureCredentialsId>10c8725a-5726-419f-9394-66255ad168f3</azureCredentialsId>
+      <resourceGroup>appgroup2</resourceGroup>
+      <appName>testapp8989</appName>
+      <filePath></filePath>
+      <sourceDirectory></sourceDirectory>
+      <targetDirectory></targetDirectory>
+      <deployOnlyIfSuccessful>true</deployOnlyIfSuccessful>
+      <publishType>docker</publishType>
+      <dockerImageName>mahendrshinde/app101</dockerImageName>
+      <dockerImageTag>${BUILD_ID}</dockerImageTag>
+      <dockerFilePath>**/Dockerfile</dockerFilePath>
+      <dockerRegistryEndpoint plugin="docker-commons@1.17">
+        <url>https://index.docker.io/v1/</url>
+        <credentialsId>b56d18af-9eb9-4ef1-b636-65a457f6e9e0</credentialsId>
+      </dockerRegistryEndpoint>
+      <deleteTempImage>true</deleteTempImage>
+      <skipDockerBuild>true</skipDockerBuild>
+      <slotName></slotName>
+    </com.microsoft.jenkins.appservice.WebAppDeploymentRecorder>
+  </publishers>
+  <buildWrappers/>
+</project>
